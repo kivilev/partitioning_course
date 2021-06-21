@@ -38,6 +38,12 @@ select *
  where t.customer_id = 10
    and t.sale_date between sysdate+8 and sysdate + 12;
 
+-- очень плохо
+select *
+  from sales_interval t
+ where t.customer_id = 10;
+   --and t.sale_date between sysdate+8 and sysdate + 12;
+
 ----- Уникальные индексы
 drop index sales_interval_sale_id_glob_idx;
 drop index sales_interval_cust_id_loc_idx;
@@ -64,4 +70,3 @@ select *
   from sales_interval t
  where t.customer_id = 10
    and t.sale_date = to_date('23.06.2021 16:12:02','dd.mm.YYYY hh24:mi:ss');
-
