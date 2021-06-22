@@ -150,7 +150,7 @@ begin
   -- проведем чистку
   log_message_pack.clear_messages();
 
-  -- сверим полученный результат по три события должно остаться
+  -- сверим полученный результат => должно остаться по четыре события
   select sum(decode(t.message_type, log_message_pack.c_info_type, 1, 0)) info_cnt,
           sum(decode(t.message_type, log_message_pack.c_warning_type, 1, 0)) warning_cnt,
           sum(decode(t.message_type, log_message_pack.c_error_type, 1, 0)) error_cnt

@@ -27,7 +27,7 @@ create or replace package body log_message_pack is
       ,call_stack)
     values
       (log_message_pk_seq.nextval
-      ,p_message_dtime
+      ,p_message_dtime --systimestamp
       ,p_message_type
       ,substr(p_message, 1, 2000)
       ,substr(p_message_source, 1, 2000)
