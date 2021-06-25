@@ -27,10 +27,8 @@ insert into sale_list_hash values (6, sysdate, null, 600);
 commit;
 
 -- Сбор статистики
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_list_hash'); 
-end;
-/
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_list_hash');
+
 
 select * from user_tab_partitions t where t.table_name = 'SALE_LIST_HASH';
 select * from user_tab_subpartitions t where t.table_name = 'SALE_LIST_HASH' and t.partition_name = 'P_WEST';
