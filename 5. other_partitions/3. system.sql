@@ -20,12 +20,13 @@ insert into sale_system partition (p3) values (3, sysdate + 2, 'NY', 102);
 commit;
 
 -- Сбор статистики
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_system'); 
-end;
-/
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_system'); 
+
 
 select * from user_part_tables pt where pt.table_name = 'SALE_SYSTEM';
 select * from user_tab_partitions t where t.table_name = 'SALE_SYSTEM';
   
 select * from sale_system;
+select * from sale_system partition (p1);
+select * from sale_system partition (p2);
+select * from sale_system partition (p3);

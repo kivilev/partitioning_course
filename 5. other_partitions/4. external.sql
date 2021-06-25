@@ -43,10 +43,8 @@ partition by list (region_id)
 
 select * from sale_external t;
 
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_external'); 
-end;
-/
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_external');
+
 
 select * from user_part_tables pt where pt.table_name = 'SALE_EXTERNAL';
 select * from user_tab_partitions t where t.table_name = 'SALE_EXTERNAL';

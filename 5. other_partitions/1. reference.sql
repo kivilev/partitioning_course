@@ -40,11 +40,9 @@ commit;
 
 
 -- Сбор статистики
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale'); 
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_detail');   
-end;
-/
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale');
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_detail');
+
 
 select * from user_tab_partitions t where t.table_name = 'SALE';
 select * from user_tab_partitions t where t.table_name = 'SALE_DETAIL';

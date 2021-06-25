@@ -35,8 +35,8 @@ organization external
   )
 )
 reject limit unlimited
-PARTITION BY LIST (region_id)
-SUBPARTITION BY RANGE (sale_date)
+partition by list (region_id)
+subpartition by range (sale_date)
 (
   partition p_ca values ('CA') 
   ( subpartition p_ca_2011 values less than (date'2012-01-01') location ('sale_CA.csv'),
@@ -50,10 +50,7 @@ SUBPARTITION BY RANGE (sale_date)
 
 select * from sale_external_composite t;
 
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_external_composite'); 
-end;
-/
+call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_external_composite');
 
 select * from user_part_tables pt where pt.table_name = 'SALE_EXTERNAL_COMPOSITE';
 select * from user_tab_partitions t where t.table_name = 'SALE_EXTERNAL_COMPOSITE';
