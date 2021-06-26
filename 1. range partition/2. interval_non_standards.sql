@@ -54,10 +54,10 @@ create table sale_interval_7h(
 )
 partition by range(sale_date)
 interval(interval '7' hour)
-(partition pmin values less than (date '2005-01-01'));
+(partition pmin values less than (date '2021-06-26'));
  
 insert into sale_interval_7h 
-select level, date '2020-12-27' + level/24, 'NY', level from dual connect by level <= 100;
+select level, date '2021-06-25' + level/24, 'NY', level from dual connect by level <= 100;
 
 select * from user_tab_partitions t where t.table_name = 'SALE_INTERVAL_7H';
 
@@ -66,6 +66,7 @@ begin
 end;
 /
 
+select * from sale_interval_7h partition(SYS_P2089);
 
 --- 10 минут
 drop table sale_interval_10m;

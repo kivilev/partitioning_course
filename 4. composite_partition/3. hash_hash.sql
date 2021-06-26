@@ -9,7 +9,7 @@ create table sale_hash_hash(
   customer_id  number(30) not null
 )
 partition by hash(sale_id) -- первый уровень. hash по "ID продажи"
-subpartition by hash (sale_date) -- второй уровень. hash по "ID клиента"
+subpartition by hash (customer_id) -- второй уровень. hash по "ID клиента"
 subpartitions 2
 partitions 4;
 
@@ -26,6 +26,8 @@ begin
   dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_hash_hash'); 
 end;
 /
+
+select * from user_part_tables t where t.table_name = 'SALE_HASH_HASH';
 
 select * from user_tab_partitions t where t.table_name = 'SALE_HASH_HASH';
 select * from user_tab_subpartitions t where t.table_name = 'SALE_HASH_HASH' order by t.partition_position, t.subpartition_position;

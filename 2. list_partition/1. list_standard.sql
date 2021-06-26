@@ -36,4 +36,4 @@ end;
 select t.* from user_tab_partitions t where t.table_name = 'SALE_LIST';
 
 
-select * from sale_list partition (p_default);
+select * from sale_list partition (p_null);

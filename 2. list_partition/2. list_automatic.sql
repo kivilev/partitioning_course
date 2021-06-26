@@ -32,4 +32,4 @@ end;
 select t.* from user_tab_partitions t where t.table_name = 'SALE_LIST_AUTO';
 
 
-select * from sale_list_auto partition (SYS_P7708);
+select * from sale_list_auto partition (SYS_P2108);

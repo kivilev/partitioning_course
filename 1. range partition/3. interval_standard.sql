@@ -31,6 +31,8 @@ begin
 end;
 /
 
+select * from sales_interval_1d t where t.sale_date = date'2021-01-05'
+
 ----- Точка перехода
 
 -- 1 месяц
@@ -48,8 +50,8 @@ interval(numtoyminterval(1,'MONTH')) -- интервал 1 месяц
   partition pmin values less than (date '2005-01-15') -- точка перехода начинается не с первого дня, а с 15го
 );
 
-insert into sales_interval_1m values (1, date'1900-01-05', 'CA', 1);-- pmin
-insert into sales_interval_1m values (2, date'2000-01-05', 'CA', 1);-- pmin
+insert into sales_interval_1m values (1, date'1900-01-05', 'CA', 1);
+insert into sales_interval_1m values (2, date'2000-01-05', 'CA', 1);
 insert into sales_interval_1m values (3, date'2021-01-05', 'CA', 1);
 insert into sales_interval_1m values (4, date'2021-01-05', 'CA', 1);
 insert into sales_interval_1m values (5, date'2021-02-05', 'CA', 1);

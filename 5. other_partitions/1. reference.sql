@@ -26,11 +26,11 @@ create table sale_detail (
 )
 partition by reference(sale_detail_fk);
 
--- M
+-- Вставка в Master. Cоздает секции только там. В detail они появляются при вставки в Detail.
 insert into sale values (1, sysdate, 'CA', 101);
 insert into sale values (2, sysdate + 1, 'NY', 102);
 
--- D
+-- Вставка в Detail. Создает секции в Detail. Названия совпадают с Master.
 insert into sale_detail 
 select 1, level, level+1, level*10 from dual connect by level <= 5;
 
@@ -43,10 +43,11 @@ commit;
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale');
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_detail');
 
-
 select * from user_tab_partitions t where t.table_name = 'SALE';
 select * from user_tab_partitions t where t.table_name = 'SALE_DETAIL';
 
+
+select * from sale_detail t where t.sale_id = 1;
 
 select /*+ use_nl(t1 t2) leading(t1 t2) */* 
   from sale t1
@@ -54,5 +55,5 @@ select /*+ use_nl(t1 t2) leading(t1 t2) */*
  where t1.sale_id = 1
    and t1.sale_date between trunc(sysdate) and  trunc(sysdate)+1;
 
-select 1 from hr.sale_detail t where t.sale_id = 1;
+
    

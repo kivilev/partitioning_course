@@ -20,7 +20,7 @@ insert into sale_range values (1, date'2009-01-01', 'CA', 1);
 insert into sale_range values (2, date'2008-12-01', 'CA', 1);
 insert into sale_range values (3, date'2021-01-08', 'CA', 1);
 insert into sale_range values (4, date'2021-02-08', 'NY', 1);
-insert into sale_range values (4, null, 'NY', 1);
+insert into sale_range values (5, null, 'NY', 1);
 commit;
 
 -- Сбор статистики
@@ -33,7 +33,6 @@ end;
 select * from user_part_tables pt where pt.table_name = 'SALE_RANGE';
  
 -- смотрим какие секции были созданы
-select * from user_tab_partitions t where t.table_name = 'SALE_RANGE';
+select * from user_tab_partitions t where t.table_name = 'SALE_RANGE' order by t.partition_position;
 
-
-
+select * from sale_range partition(pmax);

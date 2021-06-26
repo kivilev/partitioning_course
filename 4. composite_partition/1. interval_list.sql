@@ -38,7 +38,10 @@ select * from sale_interval_list partition (p_west);
 --select * from sale_list_hash partition for(to_char(sysdate));
 select * from sale t partition for(date'1900-06-01');
 
-select * from sale_interval_list subpartition (p_west);
+select * from sale_interval_list subpartition (SYS_SUBP2388);
 select * from sale t subpartition for(date'1900-06-01', 'CA');
 
 select * from  all_subpartition_templates;
+
+
+
