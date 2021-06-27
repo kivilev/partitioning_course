@@ -34,13 +34,8 @@ select rownum as id,
 from dual
 connect by level <= 10000;
 
-begin
-  dbms_stats.gather_table_stats(
-    ownname          => user,
-    tabname          => 'pwdemo'
-  );
-end;
-/
+call dbms_stats.gather_table_stats( ownname => user, tabname => 'pwdemo');
+
 
 ---- Group by 
 select /*+ no_use_partition_wise_gby */ n1, d1, sum(n2) from pwdemo group by n1, d1;

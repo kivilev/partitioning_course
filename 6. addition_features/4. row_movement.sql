@@ -34,3 +34,4 @@ select pt.row_movement, pt.* from user_tables pt where pt.table_name = 'SALES_RM
 
 select * from user_tab_partitions pt where pt.table_name = 'SALES_RM';
 
+select * from sales_rm partition (SYS_P2989);

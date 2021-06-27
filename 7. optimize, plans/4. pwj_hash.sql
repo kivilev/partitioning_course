@@ -29,11 +29,13 @@ partition by hash(customer_id)
 partitions 8;
 
 
-select /*+ use_hash(s d)  parallel(s 8)  parallel(d 8) Full(s) full(d) */ * 
+select /*+ use_hash(s d)  parallel(s 8)  parallel(d 8) full(s) full(d) */
+        d.last_name, count(*)
   from sale s
   join customer d on s.customer_id = d.customer_id
- where s.sale_date between :v and v1;
-
+ where s.sale_date between :v and :v1
+ group by d.last_name
+having count(*) > 100;
 
 
 ----- Секции не совпадают
