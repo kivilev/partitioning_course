@@ -1,4 +1,4 @@
----- Составное секционирование. Hash - Hash
+﻿---- Составное секционирование. Hash - Hash
 
 drop table sale_hash_hash;
 
@@ -13,23 +13,17 @@ subpartition by hash (customer_id) -- второй уровень. hash по "ID
 subpartitions 2
 partitions 4;
 
-insert into sale_hash_hash values (1, sysdate, 'CA', 100);
-insert into sale_hash_hash values (2, sysdate, 'TX', 200);
-insert into sale_hash_hash values (3, sysdate, 'NY', 300);
-insert into sale_hash_hash values (4, sysdate, 'WA', 400);
-insert into sale_hash_hash values (5, sysdate, null, 500);
-insert into sale_hash_hash values (6, sysdate, null, 600);
-commit;
-
--- Сбор статистики
-begin
-  dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_hash_hash'); 
-end;
-/
-
-select * from user_part_tables t where t.table_name = 'SALE_HASH_HASH';
-
 select * from user_tab_partitions t where t.table_name = 'SALE_HASH_HASH';
 select * from user_tab_subpartitions t where t.table_name = 'SALE_HASH_HASH' order by t.partition_position, t.subpartition_position;
+select * from user_part_tables t where t.table_name = 'SALE_HASH_HASH';
 
-select * from sale_hash_hash subpartition (SYS_SUBP7912);
+-- Данные 
+insert into sale_hash_hash values (1, sysdate, 'CA', 100);-- 1
+insert into sale_hash_hash values (2, sysdate, 'TX', 200);-- 2
+insert into sale_hash_hash values (3, sysdate, 'NY', 300);-- 3
+insert into sale_hash_hash values (4, sysdate, null, 600);-- 4
+commit;
+
+
+-- правильное обращение
+select * from sale_hash_hash t where t.sale_id = 1 and t.customer_id = 100;
