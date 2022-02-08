@@ -1,6 +1,13 @@
----- Классический пример интервального секционирования
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1 день
+  Лекция. Одноуровневое секционирование. Интервальное секционирование
+	
+  Описание скрипта: классические примеры интервального секционирования
+*/
+
+---- 1 день
 drop table sales_interval_1d;
 
 create table sales_interval_1d(
@@ -33,9 +40,8 @@ end;
 
 select * from sales_interval_1d t where t.sale_date = date'2021-01-05'
 
------ Точка перехода
 
--- 1 месяц
+---- 1 месяц
 drop table sales_interval_1m;
 
 create table sales_interval_1m(

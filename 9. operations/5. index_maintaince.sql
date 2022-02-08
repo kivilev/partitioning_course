@@ -1,4 +1,12 @@
------- Перестроение индексов
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Операции с секциями
+	
+  Описание скрипта: обслуживание индексов
+*/
+
 
 drop table sale;
 

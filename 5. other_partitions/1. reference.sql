@@ -1,4 +1,13 @@
------- Ссылочное секционирование
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Другие типы секционирования. Ссылочное секционирование
+	
+  Описание скрипта: пример создания двух таблиц
+  	* master-таблица - двухуровневое секционирование по range(interval)-list;
+	* detail-таблица - ссылочное секционирование.
+*/
 
 drop table sale_detail;
 drop table sale;
@@ -54,6 +63,3 @@ select /*+ use_nl(t1 t2) leading(t1 t2) */*
   join sale_detail t2 on t1.sale_id = t2.sale_id
  where t1.sale_id = 1
    and t1.sale_date between trunc(sysdate) and  trunc(sysdate)+1;
-
-
-   

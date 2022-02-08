@@ -1,4 +1,12 @@
----- Пример Range-секционировани
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Одноуровневое секционирование. Range-секционирование
+	
+  Описание скрипта: пример создания таблицы с range-секционированием
+*/
+
 
 -- 1 день
 drop table sale_range;

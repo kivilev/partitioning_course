@@ -1,15 +1,22 @@
------- Секционирование Внешних таблиц
-
 /*
------ Выполняется один раз
-mkdir /opt/oracle/oradata/data4load
-chmod 777 /opt/oracle/oradata/data4load
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 1. Создаем директорию
-create or replace directory data4load_dir as '/opt/oracle/oradata/data4load';
+  Лекция. Другие типы секционирования. Секционирование внешних таблиц
+	
+  Описание скрипта: пример создания внешней таблицы с двухуровневым секционированием (list-range)
+  
+  Подготовительные действия:
+	-- 0. На сервере СУБД
+	mkdir /opt/oracle/oradata/data4load
+	chmod 777 /opt/oracle/oradata/data4load
+	копируем файлы в эту директорию из каталога data4load репозитория
 
--- 2. Даем гранты на чтение
-grant read, write on directory data4load_dir to hr;
+	-- 1. Создаем директорию в СУБД по привелегированным пользователем
+	create or replace directory data4load_dir as '/opt/oracle/oradata/data4load';
+
+	-- 2. Даем гранты на чтение
+	grant read, write on directory data4load_dir to hr;
 */
 
 drop table sale_external_composite;

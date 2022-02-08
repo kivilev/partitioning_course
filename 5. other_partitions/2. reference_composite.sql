@@ -1,4 +1,13 @@
------- Ссылочное секционирование. Composite
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Другие типы секционирования. Ссылочное секционирование
+	
+  Описание скрипта: пример создания двух таблиц
+	* master-таблица - секционирование по range(interval);
+	* detail-таблица - ссылочное секционирование.
+*/
 
 drop table sale_detail;
 drop table sale;

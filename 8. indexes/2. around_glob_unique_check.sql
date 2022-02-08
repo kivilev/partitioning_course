@@ -1,4 +1,11 @@
------ Примеры обхода глобальных уникальных индексов - УНИКАЛЬНОСТЬ
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Индексы
+	
+  Описание скрипта: примеры обхода глобальных уникальных индексов - УНИКАЛЬНОСТЬ
+*/
 
 drop table sales_interval;
 drop sequence sales_interval_seq;

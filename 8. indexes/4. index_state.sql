@@ -1,4 +1,11 @@
------- Состояния индекса
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Индексы
+	
+  Описание скрипта: демонстрация состояний индексов
+*/
 
 drop table sale;
 

@@ -1,6 +1,12 @@
----- Пример List-секционировани 
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
--- 
+  Лекция. Одноуровневое секционирование.  List-секционирование
+	
+  Описание скрипта: пример создания таблицы с list-секционированием
+*/
+
 drop table sale_list;
 
 create table sale_list(

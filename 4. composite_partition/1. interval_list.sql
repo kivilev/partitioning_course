@@ -1,4 +1,12 @@
-﻿---- Составное секционирование. Range(Interval) - List.
+﻿/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Составное секционирование
+	
+  Описание скрипта: пример создания Range(Interval) - List секционированной таблицы
+*/
+
 drop table sale_interval_list;
 
 create table sale_interval_list(
@@ -25,6 +33,7 @@ select * from user_tab_subpartitions t where t.table_name = 'SALE_INTERVAL_LIST'
 select * from user_subpartition_templates t where t.table_name = 'SALE_INTERVAL_LIST' order by t.subpartition_position;
 select * from user_part_tables t where t.table_name = 'SALE_INTERVAL_LIST';
 
+
 -- вставка данных
 insert into sale_interval_list values (1, sysdate, 'CA', 100); -- 1
 insert into sale_interval_list values (2, date '2004-01-01', 'WA', 101); -- 2
@@ -50,5 +59,3 @@ select *
   from sale_interval_list t
  where t.sale_date = date '2004-01-01' 
    and t.region_id = 'WA';
-
-

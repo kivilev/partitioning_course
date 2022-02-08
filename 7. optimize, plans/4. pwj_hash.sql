@@ -1,3 +1,12 @@
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Запросы к секционированным таблицами. Умное секционирование (Partition Wise)
+	
+  Описание скрипта: примеры "умного секционирования"
+*/
+
 drop table customer2;
 drop table sale2;
 

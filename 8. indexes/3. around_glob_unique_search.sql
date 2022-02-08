@@ -1,9 +1,17 @@
------ Примеры обхода глобальных уникальных индексов - БЫСТРЫЙ ПОИСК
 /*
-  Установить API для генерации time-based GUID (не для пром использования)
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Индексы
+	
+  Описание скрипта: примеры обхода глобальных уникальных индексов - БЫСТРЫЙ ПОИСК
   
-  select guid_pack.get_new_guid(to_date('14.07.1983 14:42:40','dd.mm.YYYY hh24:mi:ss')) from dual;
-  select guid_pack.get_date_from_guid('F1022C5D49A411C1BBBA435F05629822') from dual; 
+  Для демонстрации примеров требуется установить API для генерации time-based GUID (не для пром использования)
+  Требуемая обвязка находится в папке: /timebased_guid
+  
+  Проверка работоспособности:
+    select guid_pack.get_new_guid(to_date('14.07.1983 14:42:40','dd.mm.YYYY hh24:mi:ss')) from dual;
+    select guid_pack.get_date_from_guid('F1022C5D49A411C1BBBA435F05629822') from dual; 
 */
 
 drop table credit_application;

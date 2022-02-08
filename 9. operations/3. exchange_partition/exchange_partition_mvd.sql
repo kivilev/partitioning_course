@@ -1,4 +1,11 @@
------- Обмен секциями. Пример. Загрузка паспортов МВД
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Операции с секциями
+	
+  Описание скрипта: обмен секциями на примере загрузки паспортов МВД
+*/
 
 drop table expired_passport;
 drop table expired_passport_stage;

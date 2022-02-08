@@ -1,6 +1,13 @@
----- Различные варианты задания интервалов
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  
+  Лекция. Одноуровневое секционирование. Интервальное секционирование
+	
+  Описание скрипта: примеры задания таблиц с различными интервалами
+*/
 
---- 2 месяца
+---- 2 месяца
 drop table sale_interval_2m;
 
 create table sale_interval_2m(
@@ -23,7 +30,7 @@ insert into sale_interval_2m values (4, date'2021-03-08', 'NY', 1);
 select * from user_tab_partitions t where t.table_name = 'SALE_INTERVAL_2M';
 
 
---- 3 дня
+---- 3 дня
 drop table sale_interval_3d;
 
 create table sale_interval_3d(
@@ -43,7 +50,8 @@ select level, date '2020-12-27' + level, 'CA', level from dual connect by level 
 
 select * from user_tab_partitions t where t.table_name = 'SALE_INTERVAL_3D';
 
---- 7 чаcов
+
+---- 7 чаcов
 drop table sale_interval_7h;
 
 create table sale_interval_7h(
@@ -68,7 +76,8 @@ end;
 
 select * from sale_interval_7h partition(SYS_P2089);
 
---- 10 минут
+
+---- 10 минут
 drop table sale_interval_10m;
 
 create table sale_interval_10m(

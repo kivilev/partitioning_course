@@ -1,4 +1,11 @@
------ Глобальные и локальные индексы
+/*
+  Курс: Секционирование в СУБД Oracle
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+
+  Лекция. Индексы
+	
+  Описание скрипта: примеры создания глобальных и локальных индексов
+*/
 
 drop table sales_interval;
 
@@ -16,7 +23,7 @@ partition pmin values less than (date '2005-01-01')
 
 insert into sales_interval 
   select level, sysdate + level, decode(mod(level, 2),0,'CA','NY'), mod(level,10)+1 from dual connect by level <= 1000;
-commit; 
+commit;
 
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sales_interval');-- стата
 
