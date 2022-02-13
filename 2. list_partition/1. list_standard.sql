@@ -1,4 +1,4 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -24,12 +24,12 @@ partition by list(region_id)
   partition p_default values (default)
 );
 
-
-insert into sale_list values (1, sysdate,    'CA', 1);
-insert into sale_list values (2, sysdate,    'ND', 1);
-insert into sale_list values (3, sysdate+10, 'TX', 1);
-insert into sale_list values (4, sysdate-1,  'XX', 1);
-insert into sale_list values (5, sysdate+1,  null, 1);
+-- вставка данных
+insert into sale_list values (1, sysdate,    'CA', 1);--1
+insert into sale_list values (2, sysdate,    'ND', 1);--2
+insert into sale_list values (3, sysdate+10, 'TX', 1);--3
+insert into sale_list values (4, sysdate-1,  'XX', 1);--4
+insert into sale_list values (5, sysdate+1,  null, 1);--5
 commit;
 
 -- Сбор статистики
@@ -38,8 +38,9 @@ begin
 end;
 /
  
--- смотрим какие секции были созданы
-select t.* from user_tab_partitions t where t.table_name = 'SALE_LIST';
+-- секции таблицы
+select t.num_rows, t.* from user_tab_partitions t where t.table_name = 'SALE_LIST';
 
-
-select * from sale_list partition (p_null);
+-- обращение
+select * from sale_list t where t.region_id = 'ND';--1
+select * from sale_list partition (p_west);--2 (в промышленных решения так не используют)
