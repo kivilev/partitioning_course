@@ -1,4 +1,4 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -35,6 +35,11 @@ create table sale_detail (
 )
 partition by reference(sale_detail_fk);
 
+-- какие секции есть
+select * from user_tab_partitions t where t.table_name = 'SALE';
+select * from user_tab_partitions t where t.table_name = 'SALE_DETAIL';
+
+
 -- Вставка в Master. Cоздает секции только там. В detail они появляются при вставки в Detail.
 insert into sale values (1, sysdate, 'CA', 101);
 insert into sale values (2, sysdate + 1, 'NY', 102);
@@ -52,14 +57,10 @@ commit;
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale');
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_detail');
 
-select * from user_tab_partitions t where t.table_name = 'SALE';
-select * from user_tab_partitions t where t.table_name = 'SALE_DETAIL';
-
 
 select * from sale_detail t where t.sale_id = 1;
 
 select /*+ use_nl(t1 t2) leading(t1 t2) */* 
   from sale t1
   join sale_detail t2 on t1.sale_id = t2.sale_id
- where t1.sale_id = 1
-   and t1.sale_date between trunc(sysdate) and  trunc(sysdate)+1;
+ where t1.sale_date between trunc(sysdate) and  trunc(sysdate)+1;

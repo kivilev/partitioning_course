@@ -1,4 +1,4 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -9,7 +9,8 @@
   Подготовительные действия:
 	-- 0. На сервере СУБД
 	mkdir /opt/oracle/oradata/data4load
-	chmod 777 /opt/oracle/oradata/data4load
+  chown oracle:oinstall /opt/oracle/oradata/data4load
+	chmod 700 /opt/oracle/oradata/data4load
 	копируем файлы в эту директорию из каталога data4load репозитория
 
 	-- 1. Создаем директорию в СУБД по привелегированным пользователем

@@ -1,4 +1,4 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -9,7 +9,8 @@
   Подготовительные действия:
 	-- 0. На сервере СУБД
 	mkdir /opt/oracle/oradata/data4load
-	chmod 777 /opt/oracle/oradata/data4load
+  chown oracle:oinstall /opt/oracle/oradata/data4load
+	chmod 700 /opt/oracle/oradata/data4load
 	копируем файлы в эту директорию из каталога data4load репозитория
 
 	-- 1. Создаем директорию в СУБД по привелегированным пользователем
@@ -31,14 +32,14 @@ organization external
 (type oracle_loader
   default directory data4load_dir
   access parameters
-  ( records delimited by newline    
+  ( records delimited by newline  
     nobadfile
     logfile data4load_dir:'sale_error.log'
     fields csv with embedded
     terminated by ";" optionally enclosed by '"'
     missing field values are null
     reject rows with all null fields
-    date_format date mask "YYYY-MM-DD HH24:MI:SS"
+    date_format date mask "YYYY-MM-DD HH24:MI:SS"    
   )
 )
 reject limit unlimited
@@ -48,17 +49,13 @@ partition by list (region_id)
   partition p_NY values ('NY') default directory data4load_dir location ('sale_NY.csv')
 );
 
-select * from sale_external t;
-
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'sale_external');
 
-
-select * from user_part_tables pt where pt.table_name = 'SALE_EXTERNAL';
 select * from user_tab_partitions t where t.table_name = 'SALE_EXTERNAL';
 
-select * from sale_external t;
-
--- задействован 1 файл
-select * from sale_external t where t.region_id = 'CA';
+-- получим данные
+select * from sale_external t; -- 1 (просмотр всех файлов)
+select * from sale_external t where t.region_id = 'CA'; -- 2 (просмотр 1-го файла)
+select * from sale_external partition (p_CA) t; -- 3 (просмотр 1-го файла), так не надо делать, используйте (2)
 
 
