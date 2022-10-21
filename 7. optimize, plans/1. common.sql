@@ -1,4 +1,4 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -22,20 +22,22 @@ partition pmin values less than (date '2021-01-01') -- одна секция з�
 );
 
 -- 100 строк
-insert into sale_range select level, trunc(sysdate)+level, 'CA', level*100 from dual connect by level <= 100;
+insert into sale_range(sale_id, sale_date, region_id, customer_id)
+select level, date '2021-01-01'+level -1, 'CA', level*100 
+  from dual connect by level <= 60;
 commit;
 
 -- стата
 call dbms_stats.gather_table_stats(ownname => user, tabname => 'SALE_RANGE');
 
-select * from user_tab_partitions t where t.table_name = 'SALE_RANGE';
+select count(*) from user_tab_partitions t where t.table_name = 'SALE_RANGE';
 
 
 -- план запроса
-select * from sale_range s where s.sale_date = date '2021-06-26';-- нет данных
+select * from sale_range s where s.sale_date = date '2021-01-26';-- нет данных
 
-select * from sale_range s where s.sale_date = date '2021-06-28';-- 1 секция
+select * from sale_range s where s.sale_date = date '2021-01-28';-- 1 секция
 
-select * from sale_range s where s.sale_date in(date '2021-06-28', date '2021-06-29');-- 2 секции
+select * from sale_range s where s.sale_date in(date '2021-01-28', date '2021-01-29');-- 2 секции
 
-select * from sale_range s where s.sale_date >= date '2021-06-28';-- диапазон от до 1М
+select * from sale_range s where s.sale_date >= date '2021-01-28';-- диапазон от до 1М
