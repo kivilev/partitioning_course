@@ -31,10 +31,10 @@ select * from user_part_tables t where t.table_name = 'SALE_LIST_HASH';
 
 
 -- вставка данных
-insert into sale_list_hash values (1, sysdate, 'CA', 100);-- 1
-insert into sale_list_hash values (2, sysdate, 'TX', 200);-- 2
-insert into sale_list_hash values (3, sysdate, 'NY', 300);-- 3
-insert into sale_list_hash values (4, sysdate, null, 500);-- 4
+insert into sale_list_hash values (1, date'2023-02-01', 'CA', 100);-- 1
+insert into sale_list_hash values (2, date'2023-02-01', 'TX', 200);-- 2
+insert into sale_list_hash values (3, date'2023-02-01', 'NY', 300);-- 3
+insert into sale_list_hash values (4, date'2023-02-01', null, 500);-- 4
 commit;
 
 

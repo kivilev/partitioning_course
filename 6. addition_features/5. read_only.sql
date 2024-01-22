@@ -12,7 +12,7 @@ drop table sales_ro;
 create table sales_ro(
   sale_id      number(30) not null,
   sale_date    date not null,
-  region_id    char(2 char) not null,
+  region_id    varchar2(10 char) not null,
   customer_id  number(30) not null
 )
 partition by range(sale_date) -- секционируем по дате
@@ -34,7 +34,7 @@ select pt.read_only, pt.* from user_tab_partitions pt  where pt.table_name = 'SA
 
 -- ORA-14466: Data in a read-only partition or subpartition cannot be modified.
 update sales_ro s
-   set s.region_id = region_id || 'A'
+   set s.region_id = region_id || 'Z'
  where s.sale_id = 1;
 
 alter table sales_ro modify partition p_sale_2018 read write;
