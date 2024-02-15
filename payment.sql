@@ -9,11 +9,12 @@
 
 create table payment
 (
-  payment_id 	   number(30) not null,
+  payment_id      number(30) not null,
   from_client_id  number(30) not null,
   to_client_id       number(30) not null,
-  status_id  	   varchar2(10 char) not null,
-  payment_date  date not null
+  status_id       varchar2(10 char) not null,
+  payment_date  date not null,
+  summa         number(20,2)
 );
 
 -- alter table payment add constraint payment_pk primary key (payment_id);
@@ -28,3 +29,4 @@ comment on column PAYMENT.from_client_id is 'Клиент - отправител
 comment on column PAYMENT.to_client_id is 'Клиент - получатель';
 comment on column PAYMENT.status_id is 'Статус платежа';
 comment on column PAYMENT.payment_date is 'Дата платежа';
+comment on column PAYMENT.summa is 'Сумма платежа';

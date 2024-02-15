@@ -1,4 +1,4 @@
-﻿/*
+/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -15,6 +15,7 @@
 
 	-- 1. Создаем директорию в СУБД по привелегированным пользователем
 	create or replace directory data4load_dir as '/opt/oracle/oradata/data4load';
+  create or replace directory data4load_dir as '/opt/oracle/oradata/XE/XEPDB1/data4load';
 
 	-- 2. Даем гранты на чтение
 	grant read, write on directory data4load_dir to hr;

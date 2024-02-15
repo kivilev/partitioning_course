@@ -41,8 +41,8 @@ select * from user_tab_partitions t where t.table_name = 'SALE_DETAIL';
 
 
 -- Вставка в Master. Cоздает секции только там. В detail они появляются при вставки в Detail.
-insert into sale values (1, date'2023-01-01', 'CA', 101);
-insert into sale values (2, date'2023-01-02', 'NY', 102);
+insert into sale values (1, sysdate, 'CA', 101);
+insert into sale values (2, sysdate + 1, 'NY', 102);
 
 -- Вставка в Detail. Создает секции в Detail. Названия совпадают с Master.
 insert into sale_detail 

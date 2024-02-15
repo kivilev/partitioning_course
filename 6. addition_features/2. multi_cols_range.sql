@@ -1,4 +1,4 @@
-﻿/*
+/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -40,7 +40,10 @@ begin
 end;
 /
 
-select * from user_part_tables pt where pt.table_name = 'sale_part_2cols';
-select * from user_tab_partitions t where t.table_name = 'sale_part_2cols';
+select * from user_part_tables pt where pt.table_name = 'SALE_PART_2COLS';
+select * from user_tab_partitions t where t.table_name = 'SALE_PART_2COLS';
 
 select * from sale_part_2cols partition (p_less_2021);
+
+select * from sale_part_2cols t where t.sale_date_year = 2020 and t.sale_date_month = 1;
+

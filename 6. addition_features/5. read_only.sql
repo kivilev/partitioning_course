@@ -1,4 +1,4 @@
-﻿/*
+/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -34,7 +34,7 @@ select pt.read_only, pt.* from user_tab_partitions pt  where pt.table_name = 'SA
 
 -- ORA-14466: Data in a read-only partition or subpartition cannot be modified.
 update sales_ro s
-   set s.region_id = region_id || 'Z'
+   set s.region_id = region_id || 'J'
  where s.sale_id = 1;
 
 alter table sales_ro modify partition p_sale_2018 read write;

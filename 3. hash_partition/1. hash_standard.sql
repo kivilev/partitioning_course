@@ -1,4 +1,4 @@
-﻿/*
+/*
   Курс: Секционирование в СУБД Oracle
   Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
 
@@ -18,7 +18,7 @@ create table sale_hash(
 partition by hash(customer_id)
 partitions 4;
 
--- Вставка 10К записей
+-- Вставка 16К записей
 insert into sale_hash 
 select level, sysdate+level, 'NY', level 
  from dual connect by level <= 16000;
@@ -35,4 +35,4 @@ select t.num_rows, t.* from user_tab_partitions t where t.table_name = 'SALE_HAS
 
 
 select * from sale_hash t where t.customer_id = 1000; -- 1
-select * from sale_hash partition (SYS_P2719); -- 2. подставляем секцию из user_tab_partitions
+select * from sale_hash partition (SYS_P990); -- 2. подставляем секцию из user_tab_partitions
