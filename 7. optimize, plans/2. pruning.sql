@@ -55,16 +55,33 @@ begin
 end;
 /
 
-create or replace function get_date return date
-is
-begin
-  return sysdate + 1;
-end;
-/
+---- 1) Примеры Partition pruning
+
+-- статический
+select *
+  from sale_range s
+ where s.sale_date = date'2021-06-02';
+
+-- динамический
+select *
+  from sale_range s
+ where s.sale_date = :x;
+ 
+-- миск статический + статический
+select  /*+ use_nl(s s2) */ *
+  from sale_range s
+  join sale_range s2 on s2.sale_date = s.sale_date
+ where s.sale_date = date'2021-06-02';
+
+-- микс dynamic + dynamic
+select *
+  from sale_range s
+  join sale_range s2 on s2.sale_date = s.sale_date
+ where s.sale_date >= :x;
+
+
 
 ---- 2) Правильное использование -> отсечение секций
-
-select * from sale_range t where t.sale_date = get_date();-- PARTITION RANGE SINGLE
 
 select * from sale_list l where l.region_id in ('CA', 'WA');
 select * from sale_list l where l.region_id in ('TX');
@@ -81,13 +98,13 @@ select * from sale_range t where t.sale_id = 1;
 select * from sale_list t where t.sale_id = 1;
 
 -- преобразование ключа
-select * from sale t where trunc(t.sale_date) = date'1900-06-01';
+select * from sale_range t where trunc(t.sale_date) = date'1900-06-01';
 
-select * from sale t where t.sale_date + 1 = date'1900-06-01';
+select * from sale_range t where t.sale_date + 1 = date'1900-06-01';
 
 select * from sale_list t where upper(t.region_id) = 'CA';
 
 -- неявное преобразование типа ключа
-select * from sale t where t.sale_date = timestamp'2021-06-01 00:00:00.0000';
+select * from sale_range t where t.sale_date = timestamp'2021-06-01 00:00:00.0000';
 
 
