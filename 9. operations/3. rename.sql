@@ -66,8 +66,9 @@ begin
     v_sql := 'alter table '|| p.table_name ||' rename partition '|| p.old_name ||' to '||v_new_name;
     -- выводим
     dbms_output.put_line(p.old_name || ' ->  '|| v_new_name ||' -> ' ||v_sql );
+    
     -- переименовыываем
-    -- execute immediate v_sql;
+    execute immediate v_sql;
 
   end loop;
 

@@ -48,8 +48,6 @@ alter table sale_list drop partition p_ny; -- 1-й способ. Удалени�
 alter table sale_list drop partition for('NY'); -- 2-й способ. удаление по ссылке
 
 
-
-
 ---- Interval
 drop table sales_interval_1d;
 
@@ -78,8 +76,57 @@ select * from user_tab_partitions t where t.table_name = 'SALES_INTERVAL_1D';-- 
 select * from sales_interval_1d;-- данных нет
 
 -- drop
-alter table sales_interval_1d drop partition SYS_P441; -- удаление по имени
-alter table sales_interval_1d drop partition for(date'2020-01-02');-- удаление по ссылке на значение
+alter table sales_interval_1d drop partition SYS_P3573; -- удаление по имени
+alter table sales_interval_1d drop partition for(date'2020-01-01');-- удаление по ссылке на значение
 alter table sales_interval_1d drop partition for(date'2020-01-03'), for(date'2020-01-04');-- удаление сразу двух
+
+
+
+---- Пример удаления секций
+
+create table payment
+(
+  payment_id           number(38) not null,
+  create_dtime         timestamp(6) not null,
+  summa                number(30,2) not null,
+  currency_id          number(3) not null,
+  from_client_id       number(30) not null,
+  to_client_id         number(30) not null,
+  status               number(10) default 0 not null,
+  status_change_reason varchar2(200 char),
+  create_dtime_tech    timestamp(6) default systimestamp not null,
+  update_dtime_tech    timestamp(6) default systimestamp not null
+)
+partition by range (create_dtime) interval (numtodsinterval(1,'DAY'))
+(
+  partition pmin values less than (timestamp' 2023-01-01 00:00:00')
+);
+
+
+create or replace procedure clear_payments is
+  c_days_left constant number(3) := 90;
+  v_current_payment_count number(38);
+begin
+  
+  select count(*)
+    into v_current_payment_count
+    from payment t
+   where t.create_dtime < trunc(sysdate - c_days_left)
+     and rownum < 2;
+
+  if v_current_payment_count >= 1 then
+    for p in (select to_char(trunc(create_dtime), 'yyyymmdd') pdate
+                from payment t
+               where t.create_dtime < trunc(sysdate - c_days_left)
+               group by trunc(create_dtime)) loop
+      
+      execute immediate 'alter table payment drop partition for(to_date(' ||      p.pdate || ',''yyyymmdd'')) update global indexes';
+
+    end loop;
+  end if;
+end;
+/
+
+
 
 
