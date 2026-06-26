@@ -1,6 +1,6 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Запросы к секционированным таблицами. Умное секционирование (Partition Wise)
 	
@@ -40,7 +40,7 @@ commit;
 
 call dbms_stats.gather_table_stats( ownname => user, tabname => 'pwdemo');
 
-select t.num_rows, t.* from user_tab_subpartitions t where t.table_name = 'PWDEMO'
+select t.num_rows, t.* from user_tab_partitions t where t.table_name = 'PWDEMO';
 
 
 ---- Group by 
@@ -52,15 +52,6 @@ select d1, sum(n2) from pwdemo group by d1;
 select /*+ no_use_partition_wise_distinct */ distinct d1 from pwdemo;
 
 select distinct d1 from pwdemo;
-
-
----- Analytic Functions (18.1 добавили, но не в параллеле не работает)
-select /*+ no_use_partition_wise_wif */ 
-       avg(n2) over (partition by d1) as average 
- from pwdemo;
-
-select avg(n2) over (partition by d1) as average 
- from pwdemo;
 
 
 --------- Composite
@@ -108,16 +99,7 @@ select /*+ no_use_partition_wise_gby */ n1, d1, sum(n2) from pwdemo group by n1,
 select n1, d1, sum(n2) from pwdemo group by n1, d1;
 
 ---- Distinct
-select /*+ no_use_partition_wise_gby */ distinct n1, d1 from pwdemo;
+select /*+ no_use_partition_wise_distinct */ distinct n1, d1 from pwdemo;
 
 select distinct n1, d1 from pwdemo;
 
-
----- Analytic Functions (18.1 добавили, но не в параллеле не работает)
-select /*+ no_use_partition_wise_wif */ n1, d1,
-       avg(n2) over (partition by n1, d1) as average 
- from pwdemo;
-
-select /*+ use_partition_wise_wif */ n1, d1,
-       avg(n2) over (partition by n1, d1) as average 
- from pwdemo;

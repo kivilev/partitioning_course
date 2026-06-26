@@ -1,12 +1,13 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Одноуровневое секционирование. Range-секционирование
 	
   Описание скрипта: пример создания таблицы с range-секционированием
 */
 
+---- Пример 1. Range-секционирование
 
 -- 1 день
 drop table sale_range;
@@ -50,4 +51,24 @@ select t.num_rows, t.* from user_tab_partitions t where t.table_name = 'SALE_RAN
 select * from sale_range;-- 1
 select * from sale_range t where t.sale_date = date'2008-12-01'; -- 2
 select * from sale_range partition(pmax);-- 3 (! в промышленном коде так не пишут)
+
+
+---- Пример 2. ORA-14400: inserted partition key does not map to any partition
+
+drop table sale;
+create table sale(
+  sale_id      number(30) not null,
+  sale_date  date not null,
+  region_id   char(2 char) not null
+) 
+partition by range (sale_date)
+( 
+  partition pmin  values less than (date '2009-01-01'),
+  partition p01    values less than (date '2010-01-01'),
+  partition p02    values less than (date '2012-03-01')
+);
+
+-- ошибка
+insert into sale values (4, date '2012-03-10', 'CA');
+
 

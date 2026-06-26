@@ -1,6 +1,6 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Операции с секциями
 	
@@ -84,7 +84,7 @@ alter table sales_interval_1d drop partition for(date'2020-01-03'), for(date'202
 
 ---- Пример удаления секций
 
-create table payment
+create table payment$
 (
   payment_id           number(38) not null,
   create_dtime         timestamp(6) not null,
@@ -102,6 +102,35 @@ partition by range (create_dtime) interval (numtodsinterval(1,'DAY'))
   partition pmin values less than (timestamp' 2023-01-01 00:00:00')
 );
 
+-- 
+insert into payment$
+  (payment_id
+  ,create_dtime
+  ,summa
+  ,currency_id
+  ,from_client_id
+  ,to_client_id
+  ,status
+  ,status_change_reason)
+  with date_series as
+   (select sysdate - level + 1 as insert_date
+      from dual
+    connect by level <= 100)
+  select rownum as payment_id
+        ,insert_date as create_dtime
+        ,round(dbms_random.value(100, 10000), 2) as summa
+        ,trunc(dbms_random.value(1, 4)) as currency_id
+        ,trunc(dbms_random.value(1, 1000001)) as from_client_id
+        ,trunc(dbms_random.value(1, 1000001)) as to_client_id
+        ,trunc(dbms_random.value(0, 3)) as status
+        ,case
+           when dbms_random.value(0, 1) < 0.2 then
+            'Random reason ' || rownum
+           else
+            null
+         end as status_change_reason
+    from date_series;
+
 
 create or replace procedure clear_payments is
   c_days_left constant number(3) := 90;
@@ -110,23 +139,20 @@ begin
   
   select count(*)
     into v_current_payment_count
-    from payment t
+    from payment$ t
    where t.create_dtime < trunc(sysdate - c_days_left)
      and rownum < 2;
 
   if v_current_payment_count >= 1 then
     for p in (select to_char(trunc(create_dtime), 'yyyymmdd') pdate
-                from payment t
+                from payment$ t
                where t.create_dtime < trunc(sysdate - c_days_left)
                group by trunc(create_dtime)) loop
       
-      execute immediate 'alter table payment drop partition for(to_date(' ||      p.pdate || ',''yyyymmdd'')) update global indexes';
+      execute immediate 'alter table payment$ drop partition for(to_date(' ||      p.pdate || ',''yyyymmdd'')) update global indexes';
 
     end loop;
   end if;
 end;
 /
-
-
-
 

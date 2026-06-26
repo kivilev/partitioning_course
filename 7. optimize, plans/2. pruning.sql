@@ -1,6 +1,6 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Запросы к секционированным таблицами. Отсечение секций (partition pruning)
 	
@@ -67,17 +67,19 @@ select *
   from sale_range s
  where s.sale_date = :x;
  
--- миск статический + статический
+-- микс статический + статический
 select  /*+ use_nl(s s2) */ *
   from sale_range s
   join sale_range s2 on s2.sale_date = s.sale_date
  where s.sale_date = date'2021-06-02';
 
 -- микс dynamic + dynamic
+explain plan for
 select *
   from sale_range s
   join sale_range s2 on s2.sale_date = s.sale_date
  where s.sale_date >= :x;
+select * from dbms_xplan.display(); 
 
 
 
@@ -94,8 +96,8 @@ select * from sale_range t where t.sale_date in(date'2019-01-01', date'2021-01-0
 ---- 3) Неправильное использование -> отсечения НЕ будет
 
 -- не указан ключ секционирования
-select * from sale_range t where t.sale_id = 1;
-select * from sale_list t where t.sale_id = 1;
+select * from sale_range t where t.customer_id = 1;
+select * from sale_list t where t.customer_id = 1;
 
 -- преобразование ключа
 select * from sale_range t where trunc(t.sale_date) = date'1900-06-01';
@@ -108,3 +110,28 @@ select * from sale_list t where upper(t.region_id) = 'CA';
 select * from sale_range t where t.sale_date = timestamp'2021-06-01 00:00:00.0000';
 
 
+
+
+
+---- Пример 2. Неявное преобразование с вроде бы одинаковыми типами
+drop table sale_range;
+
+create table sale_range(
+  sale_id      number(30) not null,
+  sale_date    timestamp(6) not null,
+  region_id    char(2 char) not null,
+  customer_id  number(30) not null
+)
+partition by range(sale_date) -- секционируем по дате
+interval(numtodsinterval(1,'DAY')) -- интервал 1 день
+(
+partition pmin values less than (date '2025-01-01') -- одна секция за любой период
+);
+
+insert into sale_range select level, trunc(sysdate)-level, 'CA', level*100 from dual connect by level <= 300;
+commit;
+
+-- проблема (https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/SYSTIMESTAMP.html => TS with TZ)
+select * from sale_range t where t.sale_date = systimestamp;
+-- все ок
+select * from sale_range t where t.sale_date = cast(systimestamp as timestamp(6));

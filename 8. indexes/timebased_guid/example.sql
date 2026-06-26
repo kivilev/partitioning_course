@@ -19,7 +19,7 @@ partition pmin values less than (date '2024-01-01') -- одна секция з�
 );
 
 -- вариант 1. локальный уникальный индекс
-create unique index requests_external_id_loc_uq on sales_interval(external_id, request_date) local;
+create unique index requests_external_id_loc_uq on requests(external_id, request_date) local;
 select * 
   from requests t 
  where t.external_id = :v 

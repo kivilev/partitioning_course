@@ -1,6 +1,6 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Другие типы секционирования. Ссылочное секционирование
 	
@@ -22,7 +22,7 @@ create table sale (
 partition by range(sale_date)
 interval (interval '1' day)
 (
-  partition p1 values less than (date'1900-01-01')
+  partition p1 values less than (date'2024-01-01')
 );
 
 create table sale_detail (
@@ -34,6 +34,9 @@ create table sale_detail (
   foreign key(sale_id) references sale(sale_id)
 )
 partition by reference(sale_detail_fk);
+
+
+select * from user_part_tables t where t.table_name = 'SALE_DETAIL';
 
 -- какие секции есть
 select * from user_tab_partitions t where t.table_name = 'SALE';

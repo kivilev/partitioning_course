@@ -1,6 +1,6 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Составное секционирование
 	
@@ -25,9 +25,9 @@ subpartitions 4
   partition p_default values (default)
 );
 
+select * from user_part_tables t where t.table_name = 'SALE_LIST_HASH';
 select * from user_tab_partitions t where t.table_name = 'SALE_LIST_HASH';
 select * from user_tab_subpartitions t where t.table_name = 'SALE_LIST_HASH' order by t.partition_position, t.subpartition_position;
-select * from user_part_tables t where t.table_name = 'SALE_LIST_HASH';
 
 
 -- вставка данных

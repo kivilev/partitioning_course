@@ -1,6 +1,6 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Одноуровневое секционирование. Интервальное секционирование
 	
@@ -68,3 +68,5 @@ commit;
 -- смотрим какие секции были созданы. границы по 15е число
 select * from user_tab_partitions t where t.table_name = 'SALES_INTERVAL_1M' order by t.partition_position;
 
+-- можно создать секцию не вставляю данные
+lock table sales_interval_1m partition for (to_date('2024-01-01', 'YYYY-MM-DD')) in share mode;

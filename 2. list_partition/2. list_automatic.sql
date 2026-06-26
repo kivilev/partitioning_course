@@ -1,6 +1,6 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Одноуровневое секционирование.  List-секционирование
 	
@@ -38,6 +38,8 @@ end;
  
 -- смотрим какие секции были созданы
 select t.num_rows, t.* from user_tab_partitions t where t.table_name = 'SALE_LIST_AUTO';
+select * from user_part_tables pt where pt.table_name = 'SALE_LIST_AUTO';
+
 
 select * from sale_list_auto t where t.region_id = 'CA';
 select * from sale_list_auto partition (SYS_P2681);-- подставляем секцию из user_tab_partitions

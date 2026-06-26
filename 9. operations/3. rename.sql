@@ -1,6 +1,6 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Операции с секциями
 	
@@ -44,6 +44,13 @@ begin
   return substr(v_high_value, 1, 1000);
 end;
 /
+
+select t.table_name
+                  ,t.partition_name old_name
+                  ,get_partition_high_value(t.table_name, t.partition_name) dtime_expression
+                  ,t.high_value
+              from user_tab_partitions t
+             where t.table_name = 'SALES_INTERVAL_1D';
 
 
 -- ЭТО НЕ ПРОМЫШЛЕННОЕ РЕШЕНИЕ(!)

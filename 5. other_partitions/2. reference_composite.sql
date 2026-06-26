@@ -1,6 +1,6 @@
-/*
+﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Другие типы секционирования. Ссылочное секционирование
 	
@@ -74,5 +74,5 @@ select /*+ use_nl(t1 t2) leading(t1 t2) */*
  where t1.sale_id = 1
    and t1.sale_date between trunc(sysdate) and  trunc(sysdate)+1;
 
-select 1 from hr.sale_detail t where t.sale_id = 1;
+select 1 from sale_detail t where t.sale_id = 1;
    

@@ -1,6 +1,6 @@
 ﻿/*
   Курс: Секционирование в СУБД Oracle
-  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://oracle-dbd.ru, https://www.youtube.com/c/OracleDBD)
+  Автор: Кивилев Д.С. (https://t.me/oracle_dbd, https://backend-pro.ru, https://www.youtube.com/@pro_backendD)
 
   Лекция. Дополнительные возможности. Перемещение(миграция) строк(Row movement)
 	
@@ -30,7 +30,7 @@ select * from user_tab_partitions pt where pt.table_name = 'SALES_RM';
 
 -- по умолчанию перемешение выключено
 update sales_rm s
-   set s.sale_date = sale_date + 10
+   set s.sale_date = sale_date + 12
  where s.sale_id = 1;
 
 -- по умолчанию перемешение выключено
